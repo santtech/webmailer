@@ -105,8 +105,20 @@ export default function Home() {
           <li>Deutsch</li>
           <li>Ελληνικά</li>
           <li>español</li>
-          <li>...</li>
         </ul>
+        {/* Image Div */}
+<div className="flex flex-wrap justify-center gap-4 mt-2">
+  {["works", "round", "webmail", "micro", "zoho", "proton", "fast", "private", "name", "host", "tita"].map((img) => (
+    <Image
+      key={img}
+      src={`/${img}.jpeg`}
+      alt={img}
+      width={60}
+      height={60}
+      className="object-contain"
+    />
+  ))}
+</div>
       </div>
       <footer className="w-full flex flex-col items-center mt-20 text-sm">
 
